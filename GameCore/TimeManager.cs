@@ -46,17 +46,35 @@ namespace GameCore
             timer.Start();
 
         }
-
-        private long CurrentTime = 0;
-
         #endregion
+
+        /// <summary>
+        /// 当前时间（分钟）
+        /// </summary>
+        private long CurrentTime = 0;
+        /// <summary>
+        /// 时间步进委托
+        /// </summary>
+        /// <param name="CurrentTime"></param>
+        public delegate void GameTimeTick(long CurrentTime);
+        /// <summary>
+        /// 时间步进事件
+        /// </summary>
+        public event GameTimeTick timeTickEvent;
+
+        /// <summary>
+        /// 是否允许时间步进
+        /// </summary>
+        private bool isAllowTick = false;
 
         //时间控制
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             try
             {
-
+                if()
+                CurrentTime++;
+                timeTickEvent(CurrentTime);
             }
             catch(Exception ex)
             {
@@ -68,21 +86,42 @@ namespace GameCore
         /// </summary>
         public void TimeContinue()
         {
-
+            try
+            {
+                isAllowTick = true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
         }
         /// <summary>
         /// 暂停时间步进
         /// </summary>
         public void TimeSuspend()
         {
-
+            try
+            {
+                isAllowTick = false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
         }
         /// <summary>
         /// 设置当前时间
         /// </summary>
-        public void SetCurrentTime()
+        public void SetCurrentTime(long CurrentTime)
         {
-
+            try
+            {
+                this.CurrentTime = CurrentTime;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
         }
 
         /// <summary>
@@ -90,16 +129,60 @@ namespace GameCore
         /// </summary>
         public void JumpToCurrentDaysTime()
         {
+            try
+            {
+                //TODO:
 
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
         }
         /// <summary>
         /// 增加时间
         /// </summary>
-        public void TimeAppend()
+        public void TimeAppend(long time)
         {
-
+            try
+            {
+                CurrentTime += time;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
         }
-
+        /// <summary>
+        /// 获取日期
+        /// </summary>
+        public int GetDate()
+        {
+            try
+            {
+                return (int)Math.Floor(CurrentTime / (float)1440);
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+                return -1;
+            }
+        }
+        /// <summary>
+        /// 获取日期字符串
+        /// </summary>
+        public string GetDateStr()
+        {
+            try
+            {
+                return "年" + "月" + "日";
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+                return "日期错误";
+            }            
+        }
 
     }
 }

@@ -18,6 +18,15 @@ namespace GameCore.DataStructs
         /// <summary>
         /// NPC性别
         /// </summary>
-        public string NPCSex;
+        public bool NPCSex;
+        /// <summary>
+        /// 好感度（对主角）
+        /// </summary>
+        public int Favorable;
+        /// <summary>
+        /// 好感类型
+        /// </summary>
+        public int FeelingType;
+
     }
 }

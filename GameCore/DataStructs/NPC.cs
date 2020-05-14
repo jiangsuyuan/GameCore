@@ -15,6 +15,7 @@ namespace GameCore.DataStructs
         /// NPC姓名
         /// </summary>
         public string NPCName;
+        
 
     }
 }

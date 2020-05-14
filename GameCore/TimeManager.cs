@@ -72,11 +72,14 @@ namespace GameCore
         {
             try
             {
-                if()
-                CurrentTime++;
-                timeTickEvent(CurrentTime);
+                if (isAllowTick)
+                {
+                    CurrentTime++;
+                    timeTickEvent(CurrentTime);
+                    //Console.WriteLine("当前时间" + CurrentTime);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionLog.Instance.Write(ex);
             }            
@@ -122,6 +125,14 @@ namespace GameCore
             {
                 ExceptionLog.Instance.Write(ex);
             }
+        }
+        /// <summary>
+        /// 获取当前时间
+        /// </summary>
+        /// <returns></returns>
+        public long GetCurrentTime()
+        {
+            return this.CurrentTime;
         }
 
         /// <summary>

@@ -15,7 +15,9 @@ namespace GameCore.DataStructs
         /// NPC姓名
         /// </summary>
         public string NPCName;
-        
-
+        /// <summary>
+        /// NPC性别
+        /// </summary>
+        public string NPCSex;
     }
 }

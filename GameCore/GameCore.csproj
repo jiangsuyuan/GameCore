@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructs\Dialogue.cs" />
     <Compile Include="DataStructs\NPC.cs" />
     <Compile Include="DataStructs\Player.cs" />
     <Compile Include="ExceptionLog.cs" />

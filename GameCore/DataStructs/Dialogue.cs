@@ -11,9 +11,12 @@ namespace GameCore.DataStructs
     /// </summary>
     public class Dialogue
     {
+        /// <summary>
+        /// GUID
+        /// </summary>
+        public string ID;
 
-
-        //触发时间 树状分支 触发条件 
+        //触发时间 上下限 好感度条件 上下限 性别条件 树状分支 触发条件 
 
     }
 }

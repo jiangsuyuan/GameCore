@@ -15,6 +15,7 @@ namespace GameStoryEditor
         public PlayerEditor()
         {
             InitializeComponent();
+
         }
     }
 }

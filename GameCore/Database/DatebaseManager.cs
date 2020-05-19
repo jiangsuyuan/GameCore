@@ -1,5 +1,8 @@
-﻿using System;
+﻿using GameLogger;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +43,107 @@ namespace GameCore.Database
         }
         #endregion
 
+        #region 连接与查询
+        /// <summary>
+        /// 连接字符串
+        /// </summary>
+        public static string StrConn
+        {
+            get
+            {
+                return "";//ControlDataConfig.Instance.GetSQLiteConnectionString();
+            }
+        }
 
+        /// <summary>
+        /// 创建一个SQLite连接
+        /// </summary>
+        /// <param name="filePath">连接字符串</param>
+        /// <returns>SQLite连接</returns>
+        private static SQLiteConnection CreateSQLiteConnection()
+        {
+            SQLiteConnectionStringBuilder build = new SQLiteConnectionStringBuilder();
+            build.DataSource = StrConn;
+            SQLiteConnection conn = new SQLiteConnection(build.ToString());
+            return conn;
+        }
+
+        /// <summary>
+        /// 执行SQL语句
+        /// </summary>
+        /// <param name="sqlString">sql语句</param>
+        /// <returns>是否成功</returns>
+        private static bool ExecutedSQL(string sqlString)
+        {
+            try
+            {
+                using (SQLiteConnection con = CreateSQLiteConnection())
+                {
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+
+                    SQLiteCommand com = new SQLiteCommand(sqlString, con);
+                    com.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 执行select语句，并返回数据表
+        /// </summary>
+        /// <param name="sqlSeletedString">select语句</param>
+        /// <returns>表</returns>
+        private static DataTable GetDataTable(string sqlSeletedString)
+        {
+            try
+            {
+                using (SQLiteConnection con = CreateSQLiteConnection())
+                {
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+                    DataTable dt = new DataTable();
+                    SQLiteDataAdapter da = new SQLiteDataAdapter(sqlSeletedString, con);
+                    da.Fill(dt);
+                    con.Close();
+                    return dt;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+                return null;
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// 创建数据表
+        /// </summary>
+        public void CreateTables()
+        {
+            try
+            {
+
+
+
+
+            }
+            catch(Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
+        }
 
     }
 }

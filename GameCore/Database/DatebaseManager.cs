@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace GameCore.Database
         /// <summary>
         /// 连接字符串
         /// </summary>
-        public static string StrConn
+        public static string DataFilePath
         {
             get
             {
@@ -63,7 +64,7 @@ namespace GameCore.Database
         private static SQLiteConnection CreateSQLiteConnection()
         {
             SQLiteConnectionStringBuilder build = new SQLiteConnectionStringBuilder();
-            build.DataSource = StrConn;
+            build.DataSource = DataFilePath;
             SQLiteConnection conn = new SQLiteConnection(build.ToString());
             return conn;
         }
@@ -134,6 +135,19 @@ namespace GameCore.Database
         {
             try
             {
+                //创建数据文件
+                if(!File.Exists(DataFilePath))
+                {
+                    SQLiteConnection.CreateFile("XXXX.db");
+                }
+
+
+                //删除数据表
+
+                string sql = "drop table if exists NPC";
+
+
+                //创建数据表
 
 
 

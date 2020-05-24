@@ -23,7 +23,14 @@ namespace GameCore.DataStructs
         /// 玩家性别
         /// </summary>
         public bool PlayerSex;
-
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public bool PetName;
+        /// <summary>
+        /// 爱称
+        /// </summary>
+        public bool LoveName;
         /// <summary>
         /// 初始化
         /// </summary>

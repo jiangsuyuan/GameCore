@@ -1,4 +1,6 @@
-﻿using GameLogger;
+﻿using GameCore.Database;
+using GameCore.DataStructs;
+using GameLogger;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +19,12 @@ namespace GameStoryEditor
         {
             InitializeComponent();
             InitializeTable();
+            InitializeData();
         }
         /// <summary>
         /// 初始化表格
         /// </summary>
-        public void InitializeTable()
+        private void InitializeTable()
         {
             dataGridView1.Click += DataGridView1_Click;
 
@@ -75,6 +78,20 @@ namespace GameStoryEditor
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.AllowUserToAddRows = false;
         }
+        
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        private void InitializeData()
+        {
+            List<NPC> npcList = DatabaseManager.Instance.GetNPCs();
+            this.dataGridView1.Rows.Clear();
+            foreach (NPC npc in npcList)
+            {
+                dataGridView1.Rows.Add(new string[] { npc.ID, npc.NPCName, npc.NPCSex, npc.description });
+            }
+        }
+
         /// <summary>
         /// 单击列表
         /// </summary>
@@ -111,8 +128,19 @@ namespace GameStoryEditor
                 {
                     NpcSex = "女";
                 }
-                int rowIndex = dataGridView1.Rows.Add(new string[] { Guid.NewGuid().ToString(), textBox2.Text, NpcSex, textBox1.Text });
+                
+                NPC npc = new NPC();
+                npc.ID = Guid.NewGuid().ToString();
+                npc.NPCName = textBox2.Text;
+                npc.NPCSex = NpcSex;
+                npc.description = textBox1.Text;
+
+                int rowIndex = dataGridView1.Rows.Add(new string[] { npc.ID, npc.NPCName, NpcSex, npc.description });
                 dataGridView1.CurrentCell = dataGridView1[1, rowIndex];
+
+                DatabaseManager.Instance.InsertNPC(npc);
+
+
             }
             catch (Exception ex)
             {

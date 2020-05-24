@@ -12,13 +12,17 @@ namespace GameCore.DataStructs
     public class NPC
     {
         /// <summary>
+        /// ID
+        /// </summary>
+        public string ID;
+        /// <summary>
         /// NPC姓名
         /// </summary>
         public string NPCName;
         /// <summary>
         /// NPC性别
         /// </summary>
-        public bool NPCSex;
+        public string NPCSex;
         /// <summary>
         /// 好感度（对主角）
         /// </summary>
@@ -27,6 +31,10 @@ namespace GameCore.DataStructs
         /// 好感类型
         /// </summary>
         public int FeelingType;
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string description;
 
     }
 }

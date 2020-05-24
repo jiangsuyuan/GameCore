@@ -9,12 +9,24 @@ namespace GameCore.DataStructs
     /// <summary>
     /// 对话（和主角的）
     /// </summary>
-    public class Dialogue
+    public class Story
     {
         /// <summary>
         /// GUID
         /// </summary>
         public string ID;
+        /// <summary>
+        /// NPCID
+        /// </summary>
+        public string NPCID;
+        /// <summary>
+        /// 剧情名称
+        /// </summary>
+        public string storyName;
+        /// <summary>
+        /// 主角性别条件
+        /// </summary>
+        public string playerSex;
         /// <summary>
         /// 时间上限
         /// </summary>
@@ -40,13 +52,9 @@ namespace GameCore.DataStructs
         /// </summary>
         public int endFavorableType;
         /// <summary>
-        /// 主角性别条件
-        /// </summary>
-        public int PlayerSex;
-        /// <summary>
         /// 对话内容
         /// </summary>
-        public DialogueTree dialogueTree;
+        public List<StoryTree> dialogueTree = new List<StoryTree>();
 
 
         //TODO:触发物品条件。
@@ -57,24 +65,28 @@ namespace GameCore.DataStructs
     /// <summary>
     /// 对话树
     /// </summary>
-    public class DialogueTree
+    public class StoryTree
     {
         /// <summary>
         /// GUID
         /// </summary>
         public string ID;
         /// <summary>
+        /// 所属对话
+        /// </summary>
+        public string DialogueID;
+        /// <summary>
         /// 父对象
         /// </summary>
-        public DialogueTree parent;
+        public string parentID;
+        /// <summary>
+        /// 说话者ID
+        /// </summary>
+        public string TalkerID;
         /// <summary>
         /// 子对话
         /// </summary>
-        public List<DialogueTree> childs;
-        /// <summary>
-        /// 对话所有者
-        /// </summary>
-        public bool isPlayer;
+        public List<string> childIDList;        
         /// <summary>
         /// 内容
         /// </summary>

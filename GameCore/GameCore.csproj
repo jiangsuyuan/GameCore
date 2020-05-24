@@ -29,7 +29,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -68,8 +68,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DatebaseManager.cs" />
-    <Compile Include="DataStructs\Dialogue.cs" />
+    <Compile Include="Database\DatabaseManager.cs" />
+    <Compile Include="DataStructs\Story.cs" />
     <Compile Include="DataStructs\NPC.cs" />
     <Compile Include="DataStructs\Player.cs" />
     <Compile Include="ExceptionLog.cs" />

@@ -1,4 +1,5 @@
-﻿using GameLogger;
+﻿using GameCore.Database;
+using GameLogger;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,6 +67,23 @@ namespace GameStoryEditor
             catch (Exception ex)
             {
                 ExceptionLog.Instance.Write(ex);
+            }
+        }
+
+        /// <summary>
+        /// 创建数据库
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if( DatabaseManager.Instance.CreateTables())
+            {
+                MessageBox.Show("创建成功");
+            }
+            else
+            {
+                MessageBox.Show("创建失败");
             }
         }
     }

@@ -31,6 +31,7 @@
             this.button_Player = new System.Windows.Forms.Button();
             this.button_NPC = new System.Windows.Forms.Button();
             this.button_Story = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_Player
@@ -69,6 +70,19 @@
             this.button_Story.UseVisualStyleBackColor = false;
             this.button_Story.Click += new System.EventHandler(this.button_Story_Click);
             // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.BackColor = System.Drawing.Color.Red;
+            this.button1.Location = new System.Drawing.Point(28, 412);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(171, 40);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "创建数据库";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
@@ -77,6 +91,7 @@
             this.ClientSize = new System.Drawing.Size(889, 466);
             this.Controls.Add(this.button_Story);
             this.Controls.Add(this.button_NPC);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button_Player);
             this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -92,5 +107,6 @@
         private System.Windows.Forms.Button button_Player;
         private System.Windows.Forms.Button button_NPC;
         private System.Windows.Forms.Button button_Story;
+        private System.Windows.Forms.Button button1;
     }
 }

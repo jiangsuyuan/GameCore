@@ -30,6 +30,11 @@ namespace GameStoryEditor
         /// 当前对话
         /// </summary>
         private string currentTopic = "";
+        /// <summary>
+        /// 当前人对话列表
+        /// </summary>
+        private List<Story> storyList = null;
+
 
         /// <summary>
         /// 构造函数
@@ -46,8 +51,6 @@ namespace GameStoryEditor
         /// </summary>
         private void InitializeTable()
         {
-            dataGridView1.Click += DataGridView1_Click;
-
             DataGridViewColumn ageColumn0 = new DataGridViewColumn()
             {
                 Name = "ID",
@@ -110,22 +113,113 @@ namespace GameStoryEditor
             UpdateTableData();
         }
 
-        
-
+        #region 选择所属人
         /// <summary>
-        /// 表格点击
+        /// 人员选择
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DataGridView1_Click(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateTableData();
+        }
+        /// <summary>
+        /// 所属人
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radioButton9_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateTableData();
+        }
+        /// <summary>
+        /// 所属人
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            this.comboBox1.Enabled = radioButton8.Checked;
+            if (!radioButton8.Checked)
+            {
+                this.comboBox1.Text = "";
+            }
+            UpdateTableData();
+        }
+        /// <summary>
+        /// 更新表格数据
+        /// </summary>
+        private void UpdateTableData()
+        {
+            if (radioButton9.Checked)
+            {
+                npcID = "玩家";
+            }
+            else
+            {
+                if (this.comboBox1.SelectedIndex != -1)
+                {
+                    ListItem li = this.comboBox1.SelectedItem as ListItem;
+                    npcID = li.Key;
+                }
+                else
+                {
+                    npcID = "";
+                }
+            }
+            this.dataGridView1.Rows.Clear();
+            if (!string.IsNullOrEmpty(npcID))
+            {
+                List<Story> storyList = DatabaseManager.Instance.GetStorysByID(npcID);
+                foreach (Story story in storyList)
+                {
+                    int rowIndex = dataGridView1.Rows.Add(new string[] { story.ID, story.storyName });
+
+                    currentTopic = "";
+                }
+                this.storyList = storyList;
+            }
+        }
+        #endregion
+
+        #region 对话管理
+        /// <summary>
+        /// 单击单元格
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                if(dataGridView1.CurrentRow == null)
+                if (this.dataGridView1.CurrentRow.Index < 0)
                 {
                     return;
                 }
-                if(Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value) != currentTopic)
+                if (this.storyList != null)
+                {
+                    Story story = storyList.ElementAt(e.RowIndex);
+                    this.textBox2.Text = story.storyName;
+                    if (story.playerSex == "男")
+                    {
+                        this.radioButton1.Checked = true;
+                    }
+                    if (story.playerSex == "女")
+                    {
+                        this.radioButton2.Checked = true;
+                    }
+                    else
+                    {
+                        this.radioButton3.Checked = true;
+                    }
+                    this.textBox3.Text = story.beginTime.ToString();
+                    this.textBox4.Text = story.endTime.ToString();
+                    this.textBox5.Text = story.beginFavorable.ToString();
+                    this.textBox6.Text = story.endFavorable.ToString();
+                    this.textBox7.Text = story.beginFavorableType.ToString();
+                    this.textBox8.Text = story.endFavorableType.ToString();
+                }
+                if (Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value) != currentTopic)
                 {
                     currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
                     //TODO：切换对话树
@@ -134,18 +228,109 @@ namespace GameStoryEditor
 
 
 
-
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionLog.Instance.Write(ex);
             }
-            
         }
-
         /// <summary>
-        /// 添加树
+        /// 新建树
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
+        }
+        /// <summary>
+        /// 修改树
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button6_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
+        }
+        /// <summary>
+        /// 确定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(textBox2.Text.Trim()))
+                {
+                    return;
+                }
+                Story story = new Story();
+
+                story.ID = Guid.NewGuid().ToString();
+                story.NPCID = npcID;
+                story.storyName = textBox2.Text;
+                if (radioButton1.Checked)
+                {
+                    story.playerSex = "男";
+                }
+                else if (radioButton2.Checked)
+                {
+                    story.playerSex = "女";
+                }
+                else if (radioButton3.Checked)
+                {
+                    story.playerSex = "不限";
+                }
+
+                //保存对话
+                story.beginTime = Convert.ToInt32(textBox3.Text);
+                story.endTime = Convert.ToInt32(textBox4.Text);
+                story.beginFavorable = Convert.ToInt32(textBox5.Text);
+                story.endFavorable = Convert.ToInt32(textBox6.Text);
+                story.beginFavorableType = Convert.ToInt32(textBox7.Text);
+                story.endFavorableType = Convert.ToInt32(textBox8.Text);
+
+                int rowIndex = dataGridView1.Rows.Add(new string[] { story.ID, story.storyName });
+                dataGridView1.CurrentCell = dataGridView1[1, rowIndex];
+                currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
+                treeView1.Nodes.Clear();
+
+
+
+
+
+
+                DatabaseManager.Instance.InsertStory(story);
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
+        }
+        #endregion
+
+        #region 对话树管理
+        /// <summary>
+        /// 添加回应
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -172,63 +357,11 @@ namespace GameStoryEditor
                 tn.Tag = storyTree.ID;
                 storyTree.parentID = treeView1.SelectedNode.Tag.ToString();
                 treeView1.SelectedNode = tn;
-            }         
-            
+            }
+
 
             //DatabaseManager.Instance.InsertStoryTree(storyTree);
         }
-
-        /// <summary>
-        /// 添加对话树
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void button5_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if(string.IsNullOrEmpty(textBox2.Text.Trim()))
-                {
-                    return;
-                }
-                Story story = new Story();
-
-                story.ID = Guid.NewGuid().ToString();
-                story.NPCID = npcID;
-                story.storyName = textBox2.Text;
-                if(radioButton1.Checked)
-                {
-                    story.playerSex = "男";
-                }
-                else if(radioButton2.Checked)
-                {
-                    story.playerSex = "女";
-                }
-                else if(radioButton3.Checked)
-                {
-                    story.playerSex = "不限";
-                }
-
-                story.beginTime = Convert.ToInt32(textBox3.Text);
-                story.endTime = Convert.ToInt32(textBox4.Text);
-                story.beginFavorable = Convert.ToInt32(textBox5.Text);
-                story.endFavorable = Convert.ToInt32(textBox6.Text);
-                story.beginFavorableType = Convert.ToInt32(textBox7.Text);
-                story.endFavorableType = Convert.ToInt32(textBox8.Text);
-
-                int rowIndex = dataGridView1.Rows.Add(new string[] { story.ID, story.storyName });
-                dataGridView1.CurrentCell = dataGridView1[1, rowIndex];
-                currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
-                treeView1.Nodes.Clear();
-
-                DatabaseManager.Instance.InsertStory(story);
-            }
-            catch(Exception ex)
-            {
-                ExceptionLog.Instance.Write(ex);
-            }
-        }
-
         /// <summary>
         /// 说话人
         /// </summary>
@@ -237,7 +370,7 @@ namespace GameStoryEditor
         private void radioButton5_CheckedChanged(object sender, EventArgs e)
         {
             this.comboBox2.Enabled = radioButton5.Checked;
-            if(!radioButton5.Checked)
+            if (!radioButton5.Checked)
             {
                 this.comboBox2.Text = "";
             }
@@ -255,65 +388,8 @@ namespace GameStoryEditor
                 this.comboBox3.Text = "";
             }
         }
-        /// <summary>
-        /// 所属人
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void radioButton8_CheckedChanged(object sender, EventArgs e)
-        {
-            this.comboBox1.Enabled = radioButton8.Checked;
-            if (!radioButton8.Checked)
-            {
-                this.comboBox1.Text = "";
-            }
-            UpdateTableData();
-        }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateTableData(); 
-        }
-
-        private void radioButton9_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateTableData();
-        }
-
-        /// <summary>
-        /// 更新表格数据
-        /// </summary>
-        private void UpdateTableData()
-        {
-            if (radioButton9.Checked)
-            {
-                npcID = "玩家";
-            }
-            else
-            {
-                if (this.comboBox1.SelectedIndex != -1)
-                {
-                    ListItem li = this.comboBox1.SelectedItem as ListItem;
-                    npcID = li.Key;
-                }
-                else
-                {
-                    npcID = "";
-                }
-            }
-            this.dataGridView1.Rows.Clear();
-            if (!string.IsNullOrEmpty(npcID))
-            {
-                List<Story> storyList = DatabaseManager.Instance.GetStorysByID(npcID);
-                foreach(Story story in storyList)
-                {
-                    int rowIndex = dataGridView1.Rows.Add(new string[] { story.ID, story.storyName });
-
-                    currentTopic = "";
-
-                }
-            }
-        }
+        #endregion
     }
 
     public class ListItem

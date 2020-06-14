@@ -71,10 +71,12 @@
             this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.radioButton9 = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button4
@@ -84,8 +86,9 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(76, 34);
             this.button4.TabIndex = 1;
-            this.button4.Text = "删除";
+            this.button4.Text = "新建";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // comboBox1
             // 
@@ -108,12 +111,13 @@
             this.dataGridView1.RowTemplate.Height = 27;
             this.dataGridView1.Size = new System.Drawing.Size(661, 228);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(688, 59);
+            this.label2.Location = new System.Drawing.Point(13, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 27);
             this.label2.TabIndex = 5;
@@ -123,7 +127,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(688, 109);
+            this.label4.Location = new System.Drawing.Point(13, 101);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 27);
             this.label4.TabIndex = 5;
@@ -133,7 +137,7 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(688, 154);
+            this.label5.Location = new System.Drawing.Point(13, 146);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(112, 27);
             this.label5.TabIndex = 5;
@@ -143,7 +147,7 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(688, 196);
+            this.label6.Location = new System.Drawing.Point(13, 188);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(112, 27);
             this.label6.TabIndex = 5;
@@ -153,7 +157,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(688, 14);
+            this.label3.Location = new System.Drawing.Point(13, 6);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 27);
             this.label3.TabIndex = 5;
@@ -163,7 +167,7 @@
             // 
             this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(806, 58);
+            this.radioButton1.Location = new System.Drawing.Point(131, 50);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(53, 31);
             this.radioButton1.TabIndex = 6;
@@ -174,7 +178,7 @@
             // 
             this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(865, 58);
+            this.radioButton2.Location = new System.Drawing.Point(190, 50);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(53, 31);
             this.radioButton2.TabIndex = 6;
@@ -186,7 +190,7 @@
             this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton3.AutoSize = true;
             this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(924, 58);
+            this.radioButton3.Location = new System.Drawing.Point(249, 50);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(73, 31);
             this.radioButton3.TabIndex = 6;
@@ -197,7 +201,7 @@
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(806, 11);
+            this.textBox2.Location = new System.Drawing.Point(131, 3);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(424, 34);
             this.textBox2.TabIndex = 7;
@@ -205,7 +209,7 @@
             // textBox3
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(806, 105);
+            this.textBox3.Location = new System.Drawing.Point(131, 97);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(147, 34);
             this.textBox3.TabIndex = 7;
@@ -214,7 +218,7 @@
             // textBox4
             // 
             this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox4.Location = new System.Drawing.Point(1083, 104);
+            this.textBox4.Location = new System.Drawing.Point(408, 96);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(147, 34);
             this.textBox4.TabIndex = 7;
@@ -223,7 +227,7 @@
             // textBox5
             // 
             this.textBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox5.Location = new System.Drawing.Point(806, 149);
+            this.textBox5.Location = new System.Drawing.Point(131, 141);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(147, 34);
             this.textBox5.TabIndex = 7;
@@ -232,7 +236,7 @@
             // textBox6
             // 
             this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox6.Location = new System.Drawing.Point(1083, 149);
+            this.textBox6.Location = new System.Drawing.Point(408, 141);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(147, 34);
             this.textBox6.TabIndex = 7;
@@ -241,7 +245,7 @@
             // textBox7
             // 
             this.textBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox7.Location = new System.Drawing.Point(806, 192);
+            this.textBox7.Location = new System.Drawing.Point(131, 184);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(147, 34);
             this.textBox7.TabIndex = 7;
@@ -250,7 +254,7 @@
             // textBox8
             // 
             this.textBox8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox8.Location = new System.Drawing.Point(1083, 191);
+            this.textBox8.Location = new System.Drawing.Point(408, 183);
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(147, 34);
             this.textBox8.TabIndex = 7;
@@ -261,6 +265,7 @@
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.treeView1.Enabled = false;
             this.treeView1.Location = new System.Drawing.Point(2, 280);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView1.Name = "treeView1";
@@ -313,23 +318,26 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Enabled = false;
             this.button5.Location = new System.Drawing.Point(1154, 238);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(76, 34);
             this.button5.TabIndex = 1;
-            this.button5.Text = "添加";
+            this.button5.Text = "确定";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(1059, 238);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(76, 34);
             this.button6.TabIndex = 1;
-            this.button6.Text = "更改";
+            this.button6.Text = "修改";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // textBox9
             // 
@@ -376,7 +384,7 @@
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(965, 109);
+            this.label9.Location = new System.Drawing.Point(290, 101);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(112, 27);
             this.label9.TabIndex = 5;
@@ -386,7 +394,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(965, 154);
+            this.label10.Location = new System.Drawing.Point(290, 146);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(112, 27);
             this.label10.TabIndex = 5;
@@ -396,7 +404,7 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(965, 196);
+            this.label11.Location = new System.Drawing.Point(290, 188);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(112, 27);
             this.label11.TabIndex = 5;
@@ -480,6 +488,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.radioButton4);
             this.panel1.Controls.Add(this.radioButton5);
+            this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(2, 508);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1232, 108);
@@ -495,6 +504,7 @@
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.radioButton6);
             this.panel2.Controls.Add(this.radioButton7);
+            this.panel2.Enabled = false;
             this.panel2.Location = new System.Drawing.Point(2, 614);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1232, 113);
@@ -537,32 +547,42 @@
             this.panel3.Size = new System.Drawing.Size(661, 40);
             this.panel3.TabIndex = 10;
             // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.label4);
+            this.panel4.Controls.Add(this.label9);
+            this.panel4.Controls.Add(this.textBox8);
+            this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.textBox7);
+            this.panel4.Controls.Add(this.label10);
+            this.panel4.Controls.Add(this.textBox6);
+            this.panel4.Controls.Add(this.label6);
+            this.panel4.Controls.Add(this.textBox5);
+            this.panel4.Controls.Add(this.label11);
+            this.panel4.Controls.Add(this.textBox4);
+            this.panel4.Controls.Add(this.radioButton1);
+            this.panel4.Controls.Add(this.textBox3);
+            this.panel4.Controls.Add(this.radioButton2);
+            this.panel4.Controls.Add(this.textBox2);
+            this.panel4.Controls.Add(this.radioButton3);
+            this.panel4.Enabled = false;
+            this.panel4.Location = new System.Drawing.Point(670, 5);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(564, 227);
+            this.panel4.TabIndex = 11;
+            // 
             // StoryTreeEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1236, 723);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -581,8 +601,9 @@
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -631,6 +652,7 @@
         private System.Windows.Forms.RadioButton radioButton8;
         private System.Windows.Forms.RadioButton radioButton9;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 

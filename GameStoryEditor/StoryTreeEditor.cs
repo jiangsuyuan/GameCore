@@ -229,6 +229,11 @@ namespace GameStoryEditor
 
 
                 }
+
+                panel1.Enabled = false;
+                panel2.Enabled = false;
+                panel4.Enabled = false;
+                this.treeView1.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -244,10 +249,28 @@ namespace GameStoryEditor
         {
             try
             {
+                this.dataGridView1.CurrentCell = null;
 
+                //清空
+                this.textBox2.Text = "";
+                this.textBox3.Text = "";
+                this.textBox4.Text = "";
+                this.textBox5.Text = "";
+                this.textBox6.Text = "";
+                this.textBox7.Text = "";
+                this.textBox8.Text = "";
+                this.radioButton3.Checked = true;
 
+                this.radioButton4.Checked = true;
+                this.radioButton6.Checked = true;
+                this.textBox9.Text = "";
+                this.textBox1.Text = "";
+                this.treeView1.Nodes.Clear();
 
-
+                panel1.Enabled = true;
+                panel2.Enabled = true;
+                panel4.Enabled = true;
+                this.treeView1.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -263,7 +286,10 @@ namespace GameStoryEditor
         {
             try
             {
-
+                panel1.Enabled = true;
+                panel2.Enabled = true;
+                panel4.Enabled = true;
+                this.treeView1.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -313,6 +339,8 @@ namespace GameStoryEditor
                 dataGridView1.CurrentCell = dataGridView1[1, rowIndex];
                 currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
                 treeView1.Nodes.Clear();
+
+                //保存对话树
 
 
 

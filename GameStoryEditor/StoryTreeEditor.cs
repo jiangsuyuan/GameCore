@@ -218,6 +218,10 @@ namespace GameStoryEditor
                     this.textBox6.Text = story.endFavorable.ToString();
                     this.textBox7.Text = story.beginFavorableType.ToString();
                     this.textBox8.Text = story.endFavorableType.ToString();
+
+                    this.button4.Enabled = true;
+                    this.button5.Enabled = false;
+                    this.button6.Enabled = true;
                 }
                 if (Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value) != currentTopic)
                 {
@@ -267,10 +271,13 @@ namespace GameStoryEditor
                 this.textBox1.Text = "";
                 this.treeView1.Nodes.Clear();
 
-                panel1.Enabled = true;
+                panel1.Enabled = false;
                 panel2.Enabled = true;
                 panel4.Enabled = true;
                 this.treeView1.Enabled = true;
+
+                this.button6.Enabled = false;
+                this.button5.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -286,8 +293,8 @@ namespace GameStoryEditor
         {
             try
             {
-                panel1.Enabled = true;
-                panel2.Enabled = true;
+                panel1.Enabled = false;
+                panel2.Enabled = this.treeView1.Nodes.Count == 0 | false;
                 panel4.Enabled = true;
                 this.treeView1.Enabled = true;
             }
@@ -367,25 +374,42 @@ namespace GameStoryEditor
 
             string npcNameTemp = "";
 
+            if(this.radioButton6.Checked)
+            {
+                npcNameTemp = "玩家";
+            }
+            else
+            {
+                if(!string.IsNullOrEmpty(comboBox3.Text))
+                {
+                    npcNameTemp = comboBox3.Text;
+                }
+                else
+                {
+                    MessageBox.Show("请选择NPC");
+                }
+            }
+
+
             StoryTree storyTree = new StoryTree();
             storyTree.ID = Guid.NewGuid().ToString();
-
             storyTree.Content = textBox1.Text;
 
-            if (treeView1.SelectedNode == null)
+            if (treeView1.Nodes.Count == 0)
             {
                 TreeNode tn = treeView1.Nodes.Add(npcNameTemp + "：" + textBox1.Text);
                 tn.Tag = storyTree.ID;
                 storyTree.parentID = "";
                 treeView1.SelectedNode = tn;
             }
-            else
+            else if(treeView1.SelectedNode != null)
             {
                 TreeNode tn = treeView1.SelectedNode.Nodes.Add(npcNameTemp + "：" + textBox1.Text);
                 tn.Tag = storyTree.ID;
                 storyTree.parentID = treeView1.SelectedNode.Tag.ToString();
                 treeView1.SelectedNode = tn;
             }
+
 
 
             //DatabaseManager.Instance.InsertStoryTree(storyTree);

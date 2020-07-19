@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -192,7 +193,7 @@ namespace GameStoryEditor
         {
             try
             {
-                if (this.dataGridView1.CurrentRow.Index < 0)
+                if (this.dataGridView1.CurrentRow == null || this.dataGridView1.CurrentRow.Index < 0)
                 {
                     return;
                 }
@@ -222,17 +223,37 @@ namespace GameStoryEditor
                     this.button4.Enabled = true;
                     this.button5.Enabled = false;
                     this.button6.Enabled = true;
-                }
-                if (Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value) != currentTopic)
-                {
-                    currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
-                    //TODO：切换对话树
 
+                    if (Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value) != currentTopic)
+                    {
+                        treeView1.Nodes.Clear();
 
-
-
-
-                }
+                        currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
+                        story.dialogueTree = DatabaseManager.Instance.GetStoryTreesByID(currentTopic);
+                        for(int i = 0;i < story.dialogueTree.Count;i++)
+                        {
+                            if (string.IsNullOrEmpty(story.dialogueTree.ElementAt(i).parentID))
+                            {
+                                string talkerName = "玩家";
+                                if (!string.IsNullOrEmpty(story.dialogueTree.ElementAt(i).TalkerID))
+                                {
+                                    for (int j = 0; j < npcList.Count; j++)
+                                    {
+                                        if (npcList.ElementAt(j).ID == story.dialogueTree.ElementAt(i).TalkerID)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                TreeNode tn = treeView1.Nodes.Add(talkerName + "：" + story.dialogueTree.ElementAt(i).Content);
+                                tn.Tag = story.dialogueTree.ElementAt(i);
+                                this.CreateTree(tn, story.dialogueTree.ElementAt(i).ID, story.dialogueTree);
+                                break;
+                            }
+                        }
+                        treeView1.ExpandAll();
+                    }
+                }               
 
                 panel1.Enabled = false;
                 panel2.Enabled = false;
@@ -296,6 +317,7 @@ namespace GameStoryEditor
                 panel1.Enabled = false;
                 panel2.Enabled = this.treeView1.Nodes.Count == 0 | false;
                 panel4.Enabled = true;
+                button5.Enabled = true;
                 this.treeView1.Enabled = true;
             }
             catch (Exception ex)
@@ -345,16 +367,67 @@ namespace GameStoryEditor
                 int rowIndex = dataGridView1.Rows.Add(new string[] { story.ID, story.storyName });
                 dataGridView1.CurrentCell = dataGridView1[1, rowIndex];
                 currentTopic = Convert.ToString(dataGridView1.CurrentRow.Cells[0].Value);
-                treeView1.Nodes.Clear();
 
-                //保存对话树
+                //获取对话树
+                if (treeView1.Nodes.Count > 0)
+                {
+                    getTreeNodes(treeView1.Nodes[0], ref story.dialogueTree);
+                }
 
-
-
-
-
-
+                //TODO:判断Insert还是Update
                 DatabaseManager.Instance.InsertStory(story);
+                for (int i = 0; i < story.dialogueTree.Count; i++)
+                {
+                    DatabaseManager.Instance.InsertStoryTree(story.dialogueTree.ElementAt(i));
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+            }
+        }
+        /// <summary>
+        /// 递归获取所有对话。
+        /// </summary>
+        /// <param name="tn"></param>
+        private void getTreeNodes(TreeNode tn, ref List<StoryTree> storyTreeList)
+        {
+            storyTreeList.Add(tn.Tag as StoryTree);
+            foreach (TreeNode tnSub in tn.Nodes)
+            {
+                getTreeNodes(tnSub, ref storyTreeList);
+            }
+        }
+        /// <summary>
+        /// 递归生成树
+        /// </summary>
+        /// <param name="Node"></param>
+        /// <param name="ParentId"></param>
+        /// <param name="SubClassItem"></param>
+        public void CreateTree(TreeNode Node, string ParentId, List<StoryTree> SubClassItem)
+        {
+            try
+            {
+                for (int i = 0; i < SubClassItem.Count; i++)
+                {
+                    if (SubClassItem.ElementAt(i).parentID == ParentId)
+                    {
+                        string talkerName = "玩家";
+                        if (!string.IsNullOrEmpty(SubClassItem.ElementAt(i).TalkerID))
+                        {
+                            for (int j = 0; j < npcList.Count; j++)
+                            {
+                                if (npcList.ElementAt(j).ID == SubClassItem.ElementAt(i).TalkerID)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        TreeNode tn = Node.Nodes.Add(talkerName + "：" + SubClassItem.ElementAt(i).Content);
+                        tn.Tag = SubClassItem.ElementAt(i);
+                        CreateTree(tn, SubClassItem.ElementAt(i).ID, SubClassItem);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -371,7 +444,6 @@ namespace GameStoryEditor
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-
             string npcNameTemp = "";
 
             if(this.radioButton6.Checked)
@@ -390,29 +462,28 @@ namespace GameStoryEditor
                 }
             }
 
-
             StoryTree storyTree = new StoryTree();
             storyTree.ID = Guid.NewGuid().ToString();
             storyTree.Content = textBox1.Text;
+            storyTree.DialogueID = currentTopic;
 
             if (treeView1.Nodes.Count == 0)
             {
                 TreeNode tn = treeView1.Nodes.Add(npcNameTemp + "：" + textBox1.Text);
-                tn.Tag = storyTree.ID;
+                tn.Tag = storyTree;
                 storyTree.parentID = "";
                 treeView1.SelectedNode = tn;
+                
             }
             else if(treeView1.SelectedNode != null)
             {
                 TreeNode tn = treeView1.SelectedNode.Nodes.Add(npcNameTemp + "：" + textBox1.Text);
-                tn.Tag = storyTree.ID;
-                storyTree.parentID = treeView1.SelectedNode.Tag.ToString();
+                tn.Tag = storyTree;
+                storyTree.parentID = (treeView1.SelectedNode.Tag as StoryTree).ID;
                 treeView1.SelectedNode = tn;
             }
-
-
-
-            //DatabaseManager.Instance.InsertStoryTree(storyTree);
+            ////保存对话
+            //DatabaseManager.Instance.InsertStory(storyTree);
         }
         /// <summary>
         /// 说话人
@@ -442,6 +513,26 @@ namespace GameStoryEditor
         }
 
         #endregion
+
+        //删除节点
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //判断，删除所有子节点还是删除当前层级。
+
+
+        }
+        /// <summary>
+        /// 更新节点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+
+
+            //DatabaseManager.Instance.UpdateStory(storyTree);
+        }
     }
 
     public class ListItem

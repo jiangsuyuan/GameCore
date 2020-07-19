@@ -83,10 +83,12 @@ namespace GameCore.DataStructs
         /// 说话者ID
         /// </summary>
         public string TalkerID;
-        /// <summary>
-        /// 子对话
-        /// </summary>
-        public List<string> childIDList;        
+
+        ///// <summary>
+        ///// 子对话
+        ///// </summary>
+        //public List<string> childIDList;        
+
         /// <summary>
         /// 内容
         /// </summary>

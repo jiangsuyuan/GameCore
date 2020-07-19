@@ -267,7 +267,7 @@ namespace GameCore.Database
             {
                 StringBuilder sb = new StringBuilder();
 
-                sb.Append("insert into Story values('");
+                sb.Append("insert into StoryTree values('");
                 sb.Append(storyTree.ID);
                 sb.Append("','");
                 sb.Append(storyTree.DialogueID);
@@ -288,7 +288,7 @@ namespace GameCore.Database
             }
         }
         /// <summary>
-        /// 根据ID获取对话列表
+        /// 根据NPCID获取对话列表
         /// </summary>
         /// <param name="npcID"></param>
         /// <returns></returns>
@@ -317,6 +317,37 @@ namespace GameCore.Database
                 return result;
             }
             catch(Exception ex)
+            {
+                ExceptionLog.Instance.Write(ex);
+                return result;
+            }
+        }
+        /// <summary>
+        /// 根据storyID获取对话列表
+        /// </summary>
+        /// <param name="npcID"></param>
+        /// <returns></returns>
+        public List<StoryTree> GetStoryTreesByID(string stroyID)
+        {
+            List<StoryTree> result = new List<StoryTree>();
+            try 
+            {
+                string sql = "select * from storyTree where DialogueID = '" + stroyID + "'";
+
+                DataTable dt = GetDataTable(sql);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    StoryTree storyTree = new StoryTree();
+                    storyTree.ID = dt.Rows[i]["id"].ToString();
+                    storyTree.DialogueID = dt.Rows[i]["DialogueID"] == null ? "" : dt.Rows[i]["DialogueID"].ToString();
+                    storyTree.parentID = dt.Rows[i]["parentID"] == null ? "" : dt.Rows[i]["parentID"].ToString();
+                    storyTree.TalkerID = dt.Rows[i]["TalkerID"] == null ? "" : dt.Rows[i]["TalkerID"].ToString();
+                    storyTree.Content = dt.Rows[i]["Content"] == null ? "" : dt.Rows[i]["Content"].ToString();
+                    result.Add(storyTree);
+                }
+                return result;
+            }
+            catch (Exception ex)
             {
                 ExceptionLog.Instance.Write(ex);
                 return result;

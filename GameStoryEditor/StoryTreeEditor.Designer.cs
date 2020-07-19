@@ -292,6 +292,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "删除";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -302,6 +303,7 @@
             this.button3.TabIndex = 1;
             this.button3.Text = "更新";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // textBox1
             // 
@@ -330,6 +332,7 @@
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(1059, 238);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(76, 34);
